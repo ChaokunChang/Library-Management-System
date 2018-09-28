@@ -1,0 +1,34 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <br><br><br><br>
+	<h1>{{stock.name}}</h1>
+
+	<p>剩余数量：{{stock.remain}}</p>
+	<p>书籍简介</p>
+	<p>
+		<h4 class="well" style="color: #00CCFF">{{stock.introduction}}</h4>
+		<h4>{{stock.modify_date}}</h4>
+	</p>
+    <hr>
+    <h1>书评</h1>
+    <p>
+    <ul>
+		{% for review in reviews %}
+		<li class="alert-success">
+			<p>{{review.review_date|date:'M d, Y H:i'}}</p>
+			<p>{{review.text|linebreaks}}</p>
+            {% if review.username == request.user.username %}
+			<p class="text-right" ><a href="{% url 'library:edit_review' review.id %}">编辑书评</a> </p>
+            {% endif %}
+		</li>
+		{% empty %}
+		<li>
+			这本书还没有书评。来写一个吧！
+		</li>
+		{% endfor %}
+	</ul>
+    <h3><b><a href="{% url 'library:new_review' stock_id %}">添加书评</a></b></h3>
+    </p>
+	
+{% endblock %}

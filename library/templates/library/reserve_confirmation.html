@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>预约确认</title>
+</head>
+<body>
+{% extends 'library/base.html' %}
+{% block content %}
+    <p>
+    <h1>预约信息确认</h1>
+
+    <h2>书名：{{ stock.name }}</h2><br>
+    <h2>ISBN：{{ stock.isbn }}</h2><br>
+    <h2>作者：{{ stock.author }}</h2><br>
+
+    <h2>目前有{{ reserving_logs.count }}位用户正在预约此书</h2><br>
+    <ul>
+    {% for log in reserving_logs %}
+    <li>{{ log.user }} : {{ log.loan_date }}</li>
+    {% empty %}
+
+    {% endfor %}
+    </ul>
+    <h1>
+    <a href="{% url 'library:reserve' book_id %}"><b>确认预约</b></a><br>
+    <a href="{% url 'library:books' %}"><b>返回图书列表</b></a>
+    </h1>
+
+    </p>
+
+
+
+{% endblock %}
+</body>
+</html>

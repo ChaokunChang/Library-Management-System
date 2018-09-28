@@ -1,0 +1,119 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <br><br><br><br><br>
+    <p>
+    <h3>通知</h3>
+    <ul class="alert-info">
+        {% for noty in notifications %}
+        <li >{{ noty.message }}<br>------{{ noty.date }}</li>
+        {% empty %}
+        <li>目前没有未处理的消息</li>
+        {% endfor %}
+    </ul>
+
+    <h3>正在借阅中的书籍......</h3>
+    <table class="table table-bordered">
+        {% if borrowing.exists %}
+        <tr>
+            <th>书名</th>
+            <th>借书日期</th>
+            <th>ISBN</th>
+            <th>借书时长</th>
+            <th>操作</th>
+        </tr>
+        {% endif %}
+    {% for book in borrowing %}
+        <tr>
+            <th>{{ book.name }}</th>
+            <th>{{ book.loan_date }}</th>
+            <th>{{ book.isbn }}</th>
+            <th>{{ book.loan_time }}天</th>
+            <th><a href="{% url 'library:return' book.book %}">还书</a> /
+                <a href="{% url 'library:renew_confirmation' book.book %}">续约</a></th>
+        </tr>
+    {% empty %}
+        <h4><li>暂无借阅数目，可前往<a href="{% url 'library:books' %}">图书列表</a>借阅</li></h4>
+    {% endfor %}
+
+    </table>
+    </p>
+<hr>
+    <p>
+    <h3>正在预约中的书籍......</h3>
+    <table class="table table-bordered">
+        {% if reserving.exists %}
+        <tr>
+            <th>书名</th>
+            <th>借书日期</th>
+            <th>ISBN</th>
+            <th>操作</th>
+        </tr>
+        {% endif %}
+    {% for book in reserving %}
+        <tr>
+            <th>{{ book.name }}</th>
+            <th>{{ book.loan_date }}</th>
+            <th>{{ book.isbn }}</th>
+            <th><a href="{% url 'library:reserve_handle' book.book 1 %}">领取</a> /
+                <a href="{% url 'library:reserve_handle' book.book 0 %}">取消预约</a>
+            </th>
+        </tr>
+    {% empty %}
+        <h4><li>尚未预约过书籍，可前往<a href="{% url 'library:books' %}">预约</a></li></h4>
+    {% endfor %}
+    </table>
+    </p>
+<hr>
+    <p>
+    <h3>成功借阅记录......</h3>
+    <table class="table table-bordered">
+        {% if returned.exists %}
+        <tr>
+            <th>书名</th>
+            <th>借书日期</th>
+            <th>ISBN</th>
+            <th>借书时长</th>
+        </tr>
+        {% endif %}
+    {% for book in returned %}
+        <tr>
+            <th>{{ book.name }}</th>
+            <th>{{ book.loan_date }}</th>
+            <th>{{ book.isbn }}</th>
+            <th>{{ book.loan_time }}天</th>
+        </tr>
+    {% empty %}
+        <h4><li>暂无借阅记录</li></h4>
+    {% endfor %}
+    </table>
+    </p>
+<hr>
+     <p>
+    <h3>违约记录......</h3>
+    <table class="table table-bordered">
+        {% if broken.exists %}
+        <tr>
+            <th>书名</th>
+            <th>借书日期</th>
+            <th>ISBN</th>
+            <th>借书时长</th>
+        </tr>
+        {% endif %}
+    {% for book in broken %}
+        <tr>
+            <th>{{ book.name }}</th>
+            <th>{{ book.loan_date }}</th>
+            <th>{{ book.isbn }}</th>
+            <th>{{ book.loan_time }}天</th>
+        </tr>
+    {% empty %}
+        <h4 class="alert-success"><li>暂无违约记录,小花奖励一个</li></h4>
+    {% endfor %}
+
+    </table>
+    </p>
+
+{% endblock %}
+</body>
+</html>

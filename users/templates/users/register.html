@@ -1,0 +1,13 @@
+{% extends "users/login.html" %}
+
+{% block content %}
+
+	<form class="form-signin" method="post" action="{% url 'users:register' %}">
+    <h2 class="form-signin-heading">-------注册新用户------</h2>
+		{% csrf_token %}
+		{{form.as_p}}
+		<button name='submit' class="btn btn-lg btn-primary btn-block" >register</button>
+		<input type="hidden" name="next" value="{% url 'library:index' %}"/>
+	</form>
+
+{% endblock%}

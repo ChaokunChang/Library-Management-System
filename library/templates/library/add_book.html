@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加书籍</title>
+</head>
+<body>
+{% extends 'library/base.html' %}
+{% block content %}
+    <br><br><br><br><br>
+ <form action="{% url 'library:add_book' %}" method="post" class="form-group">
+ {% csrf_token %}
+  <div class="form-group">
+    <label>ISBN</label>
+    <input type="text" class="form-control" name="book_isbn">
+  </div>
+<div class="form-group">
+    <label>书名</label>
+    <input type="text" class="form-control" name="book_name">
+  </div>
+<div class="form-group">
+    <label>作者</label>
+    <input type="text" class="form-control" name="book_author">
+  </div>
+<div class="form-group">
+    <label>出版社</label>
+    <input type="text" class="form-control" name="book_publisher">
+  </div>
+<div class="form-group">
+    <label>版本</label>
+    <input type="number" class="form-control" name="book_version">
+  </div>
+<div class="form-group">
+    <label>出版日期</label>
+    <input type="date" class="form-control" name="book_publish_date">
+  </div>
+<div class="form-group">
+    <label>位置</label>
+    <input type="text" class="form-control" name="book_location">
+  </div>
+<div class="form-group">
+    <label>种类</label>
+    <input type="text" class="form-control" name="book_category">
+  </div>
+<div class="form-group">
+    <label>价格</label>
+    <input type="number" class="form-control" name="book_price">
+  </div>
+
+  <button type="submit" class="btn btn-default">上架</button>
+</form>
+
+{% endblock %}
+
+
+
+</body>
+</html>

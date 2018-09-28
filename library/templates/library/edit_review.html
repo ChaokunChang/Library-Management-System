@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑书评</title>
+</head>
+<body>
+{% extends "library/base.html" %}
+
+{% block content %}
+	<p> <a href="{% url 'library:bookinfo' stock.id %}">{{stock.name}}</a></p>
+	<p>编辑书评</p>
+	<form style="color: greenyellow" action="{% url 'library:edit_review' review.id %}" method="post">
+		{% csrf_token %}
+		{{form.as_p}}
+		<button name='submit'>添加书评</button>
+	</form>
+{% endblock %}
+
+</body>
+</html>

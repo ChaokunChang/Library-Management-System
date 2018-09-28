@@ -1,0 +1,69 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+	<br><br><br><br>
+	<p>
+    <fieldset>
+    <legend>查找图书</legend>
+    <form name='search' method="POST" class="form-search">
+		{% csrf_token %}
+		书名：<input type="text" name="name" value="Instruction" style="color: blue">
+        <button type = 'submit' class="btn-primary">搜索</button>
+	</form>
+    </fieldset>
+</p>
+	<p>图书列表</p>
+    <table class="table table-bordered">
+        {% if books.count != 0 %}
+        <tr>
+            <th>书名</th>
+            <th>作者</th>
+            <th>出版社</th>
+            <th>版本</th>
+            <th>种类</th>
+            <th>评论数</th>
+            <th>评论等级</th>
+            <th>余量</th>
+            <th>操作</th>
+        </tr>
+        {% endif %}
+        {% for book in books %}
+        <tr>
+            <th><a href="{% url 'library:bookinfo' book.id %}">{{ book.name }}</a> </th>
+            <th>{{ book.author }}</th>
+            <th>{{ book.remain }} / {{ book.total }}</th>
+            <th>{{ book.publisher }}</th>
+            <th>{{ book.version }}</th>
+            <th>{{ book.category }}</th>
+            <th>{{ book.review_number }}</th>
+            <th>{{ book.review_rate }}</th>
+            <th><a href="{% url 'library:borrow_gd' book.id %}">借阅</a> /
+                <a href="{% url 'library:reserve_confirmation' book.id %}">预约</a>
+            </th>
+        </tr>
+        {% empty %}
+        <li>没有找到图书</li>
+        {% endfor %}
+    </table>
+<p>
+    <a href="{% url 'library:errormsg' msg %}">Message</a>
+</p>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if books.has_previous %}                                     <!--如果有上一页-->
+                <a href="?page={{ books.previous_page_number }}">上一页</a>  <!--点击时超链接到上一页-->
+            {% endif %}
+
+            <span class="current">
+                 Page{{ books.number }} of {{ books.paginator.num_pages }}  <!--customers_list.number为当前页码,customers_list.paginator.num_pages为总页码数-->
+            </span>
+
+            {% if books.has_next %}    <!--如果有下一页-->
+                <a href="?page={{ books.next_page_number }}">下一页</a>    <!--点击时超链接到下一页-->
+            {% endif %}
+        </span>
+    </div>
+
+
+{% endblock %}

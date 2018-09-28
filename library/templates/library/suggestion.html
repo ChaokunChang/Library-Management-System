@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>建购</title>
+</head>
+<body>
+{% extends 'library/base.html' %}
+{% block content %}
+    <h1>请输入您建购的书籍信息</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type='submit'>提交</button>
+    </form>
+
+{% endblock %}
+
+</body>
+</html>

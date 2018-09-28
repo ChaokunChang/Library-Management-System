@@ -1,0 +1,38 @@
+{% extends 'library/base.html' %}
+<html>
+<head>
+<meta charset="utf-8">
+<title>借阅引导</title>
+</head>
+</html>
+
+{% block content %}
+    <br><br><br>
+    <h1>借阅信息确认</h1>
+    {% if stock.remain <= 0 %}
+        <h2>目前该书没有库存余量，请尝试
+            <a href="{% url 'library:books' %}"><b>预约</b></a>
+            或借阅其他类似书籍
+        </h2>
+        <h2><a href="{% url 'library:index' %}">回到主页</a> </h2>
+    {% else %}
+        <p><h2>当前书籍可以借阅，书籍信息如下<br>请确认是否借阅</h2></p>
+        <p>
+        <h3>书籍名称：{{ stock.name }}</h3>
+        <br>
+        <h3>书籍作者：{{ stock.author }}</h3>
+        <br>
+        <h3>出版社：{{ stock.publisher }}</h3>
+        <br>
+        <h3>ISBN号：{{ stock.isbn }}</h3>
+        </p><br>
+        <form action="{% url 'library:borrow' stock_id %}" method="post" >
+            {% csrf_token %}
+            <h3>借阅天数：<input type="number" name = 'days' value="30" max="60" min="1"  style="color: #00CC00">
+            <button type="submit" class="btn">确认借阅</button></h3>
+        </form>
+    {% endif %}
+
+
+
+{% endblock %}

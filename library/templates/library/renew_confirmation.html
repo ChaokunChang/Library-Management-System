@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>续约确认</title>
+</head>
+<body>
+{% extends 'library/base.html' %}
+{% block content %}
+<h1>预约确认</h1>
+    <h2>书名：{{ name }}</h2>
+    <h2>作者：{{ author }}</h2>
+    <h2>ISBN：{{ isbn }}</h2>
+    <h2>续约时长：</h2>
+    <form action="{% url 'library:renew' book_id %}" name="renew" method='POST'>
+        {% csrf_token %}
+        续约天数：<input type="number" name="days" value="30" max="60" min="1" style="color: #0f0f0f">
+        <button type="submit">确认</button>
+    </form>
+
+{% endblock %}
+</body>
+</html>

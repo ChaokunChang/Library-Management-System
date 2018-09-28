@@ -1,0 +1,9 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+	<h1 class="cover-heading">呱呱图书馆</h1>
+            <p class="lead">欢迎来到呱呱图书馆，开始使用前请勿忘记登陆。</p>
+            <p class="lead">
+              <a href="{% url 'library:books' %}" class="btn btn-lg btn-default">阅读使用说明</a>
+            </p>
+{% endblock %}
